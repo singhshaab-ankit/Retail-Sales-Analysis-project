@@ -6,36 +6,40 @@ The objective is to derive insights on sales, customer behavior, profitability, 
 📁 Project Structure
 
 Superstore-Retail-Analysis/
+
 ├── data/
+
 │   ├── Superstore.csv
+
 │   └── Superstore_working.csv
 
 ├── notebooks/
+
 │   └── superstore_analysis.ipynb
 
 ├── sql/
+
 │   └── retail_sales_analysis.sql
 
 └── README.md
----
-
-## 🚀 Tools & Technologies
-
-- Python (Pandas, SQLAlchemy, PyMySQL)
-- MySQL / MariaDB
-- Jupyter Notebook
-- SQL
 
 
-## 🔧 Step-by-Step Process
+🚀 Tools & Technologies
 
-### 1. 📥 Data Loading & Cleaning (Python)
+Python (Pandas, SQLAlchemy, PyMySQL)
+MySQL / MariaDB
+Jupyter Notebook
+SQL
 
-- Loaded CSV into a Pandas DataFrame
-- Converted `Order Date` and `Ship Date` to datetime
-- Checked for and removed duplicate rows
-- Checked for and handled null values
-- Standardized column names for consistency
+
+🔧 Step-by-Step Process
+
+1. 📥 Data Loading & Cleaning (Python)
+Loaded CSV into a Pandas DataFrame
+Converted `Order Date` and `Ship Date` to datetime
+Checked for and removed duplicate rows
+Checked for and handled null values
+Standardized column names for consistency
 
 2. 🛢️ Upload to SQL Database
 
@@ -48,47 +52,43 @@ from sqlalchemy import create_engine
 
 engine = create_engine('mysql+pymysql://root:root@localhost:3306/superstore_db')
 df_store.to_sql('superstore', con=engine, if_exists='replace', index=False)
-```
+
 
 
 📊 Key SQL Insights
 
 🔹 Total Sales by Region and Month
-```
 SELECT region, MONTH(order_date) AS month, ROUND(SUM(sales), 2) AS total_sales
 FROM superstore
 GROUP BY region, month
 ORDER BY month ASC, region;
-```
+
 
 🔹 Top 10 Products by Sales
-```
 SELECT product_name, ROUND(SUM(sales), 2) AS total_sales
 FROM superstore
 GROUP BY product_name
 ORDER BY total_sales DESC
 LIMIT 10;
-```
 
-### 🔹 Profit vs. Discount Analysis
-```
+
+🔹 Profit vs. Discount Analysis
 SELECT discount, ROUND(AVG(profit), 2) AS avg_profit
 FROM superstore
 GROUP BY discount
 ORDER BY discount;
-```
+
 
 🔹 Sales by Category & Sub-category
-```
 SELECT category, `sub-category`, ROUND(SUM(sales), 2) AS total_sales
 FROM superstore
 GROUP BY category, `sub-category`
 ORDER BY total_sales DESC;
-```
+
 🔹 Customer Insights
-- Most Profitable Customers
-- Sales Distribution by Ship Mode
-- Profit per Customer Segment
+Most Profitable Customers
+Sales Distribution by Ship Mode
+Profit per Customer Segment
 
 🧠 Key Takeaways
 
